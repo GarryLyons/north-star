@@ -1,0 +1,6 @@
+@NorthStar.API_HostAddress = http://localhost:5271
+
+GET {{NorthStar.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

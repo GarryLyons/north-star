@@ -1,0 +1,217 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v10.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v10.0": {
+      "NorthStar.API/1.0.0": {
+        "dependencies": {
+          "AWSSDK.CognitoIdentityProvider": "4.0.4.8",
+          "AWSSDK.Core": "4.0.3.6",
+          "AWSSDK.DynamoDBv2": "4.0.10.4",
+          "AWSSDK.Extensions.NETCore.Setup": "4.0.3.17",
+          "AWSSDK.SSO": "4.0.2.8",
+          "AWSSDK.SSOOIDC": "4.0.3.9",
+          "Swashbuckle.AspNetCore": "6.5.0"
+        },
+        "runtime": {
+          "NorthStar.API.dll": {}
+        }
+      },
+      "AWSSDK.CognitoIdentityProvider/4.0.4.8": {
+        "dependencies": {
+          "AWSSDK.Core": "4.0.3.6"
+        },
+        "runtime": {
+          "lib/net8.0/AWSSDK.CognitoIdentityProvider.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "4.0.4.8"
+          }
+        }
+      },
+      "AWSSDK.Core/4.0.3.6": {
+        "runtime": {
+          "lib/net8.0/AWSSDK.Core.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "4.0.3.6"
+          }
+        }
+      },
+      "AWSSDK.DynamoDBv2/4.0.10.4": {
+        "dependencies": {
+          "AWSSDK.Core": "4.0.3.6"
+        },
+        "runtime": {
+          "lib/net8.0/AWSSDK.DynamoDBv2.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "4.0.10.4"
+          }
+        }
+      },
+      "AWSSDK.Extensions.NETCore.Setup/4.0.3.17": {
+        "dependencies": {
+          "AWSSDK.Core": "4.0.3.6"
+        },
+        "runtime": {
+          "lib/net8.0/AWSSDK.Extensions.NETCore.Setup.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "4.0.3.17"
+          }
+        }
+      },
+      "AWSSDK.SSO/4.0.2.8": {
+        "dependencies": {
+          "AWSSDK.Core": "4.0.3.6"
+        },
+        "runtime": {
+          "lib/net8.0/AWSSDK.SSO.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "4.0.2.8"
+          }
+        }
+      },
+      "AWSSDK.SSOOIDC/4.0.3.9": {
+        "dependencies": {
+          "AWSSDK.Core": "4.0.3.6"
+        },
+        "runtime": {
+          "lib/net8.0/AWSSDK.SSOOIDC.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "4.0.3.9"
+          }
+        }
+      },
+      "Microsoft.OpenApi/1.2.3": {
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.OpenApi.dll": {
+            "assemblyVersion": "1.2.3.0",
+            "fileVersion": "1.2.3.0"
+          }
+        }
+      },
+      "Swashbuckle.AspNetCore/6.5.0": {
+        "dependencies": {
+          "Swashbuckle.AspNetCore.Swagger": "6.5.0",
+          "Swashbuckle.AspNetCore.SwaggerGen": "6.5.0",
+          "Swashbuckle.AspNetCore.SwaggerUI": "6.5.0"
+        }
+      },
+      "Swashbuckle.AspNetCore.Swagger/6.5.0": {
+        "dependencies": {
+          "Microsoft.OpenApi": "1.2.3"
+        },
+        "runtime": {
+          "lib/net7.0/Swashbuckle.AspNetCore.Swagger.dll": {
+            "assemblyVersion": "6.5.0.0",
+            "fileVersion": "6.5.0.0"
+          }
+        }
+      },
+      "Swashbuckle.AspNetCore.SwaggerGen/6.5.0": {
+        "dependencies": {
+          "Swashbuckle.AspNetCore.Swagger": "6.5.0"
+        },
+        "runtime": {
+          "lib/net7.0/Swashbuckle.AspNetCore.SwaggerGen.dll": {
+            "assemblyVersion": "6.5.0.0",
+            "fileVersion": "6.5.0.0"
+          }
+        }
+      },
+      "Swashbuckle.AspNetCore.SwaggerUI/6.5.0": {
+        "runtime": {
+          "lib/net7.0/Swashbuckle.AspNetCore.SwaggerUI.dll": {
+            "assemblyVersion": "6.5.0.0",
+            "fileVersion": "6.5.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "NorthStar.API/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "AWSSDK.CognitoIdentityProvider/4.0.4.8": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-9H1jq69H/BNmrnSr3w8+1jhWEDg6MxO1Kk8qJ0vkn8UaKR2/3A7Xeb+hwEk0OQSWqoVmqgP2kpe3+XEAuWyddw==",
+      "path": "awssdk.cognitoidentityprovider/4.0.4.8",
+      "hashPath": "awssdk.cognitoidentityprovider.4.0.4.8.nupkg.sha512"
+    },
+    "AWSSDK.Core/4.0.3.6": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-bx61NSP9bQ5BTPXGzyhS7f4d+YzIiSelsblj8JALHp5uoYKVRnoRTbWb3lyUTdzJ9UZj7Q7JiQ8sJJ5JHQ5Jrg==",
+      "path": "awssdk.core/4.0.3.6",
+      "hashPath": "awssdk.core.4.0.3.6.nupkg.sha512"
+    },
+    "AWSSDK.DynamoDBv2/4.0.10.4": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-pQDZ8EzkpS9ibuUAUVVZcvunVX6E5k1JpHNtEjxfQHB0/e0Wbop8liRBg8xBmBZZUGLicryTDrua9/S0eXed4Q==",
+      "path": "awssdk.dynamodbv2/4.0.10.4",
+      "hashPath": "awssdk.dynamodbv2.4.0.10.4.nupkg.sha512"
+    },
+    "AWSSDK.Extensions.NETCore.Setup/4.0.3.17": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-VntitFofL51fkVFxA9IspAvddFFTe2mHzK37EncEItOLH45TUNmBPHWhvKsHTZ1fAXQdR4pcArx9skVjx9/M5A==",
+      "path": "awssdk.extensions.netcore.setup/4.0.3.17",
+      "hashPath": "awssdk.extensions.netcore.setup.4.0.3.17.nupkg.sha512"
+    },
+    "AWSSDK.SSO/4.0.2.8": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-mnkWGwt85jRV5IhQG9dgNypB7DKsvNEg2ALMxvhN4qGIP60COakJlFT9X+7yc2m9uC4T+0fMZTY7EglCgoHs5w==",
+      "path": "awssdk.sso/4.0.2.8",
+      "hashPath": "awssdk.sso.4.0.2.8.nupkg.sha512"
+    },
+    "AWSSDK.SSOOIDC/4.0.3.9": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Oyr47Z19S6057SrVUHE/SAgDqGiLPdNQqiagyrX/UH1wI1yiV2LdTCQnQqqSqt+7HvnnhoHh49PGiPE0iu/cxA==",
+      "path": "awssdk.ssooidc/4.0.3.9",
+      "hashPath": "awssdk.ssooidc.4.0.3.9.nupkg.sha512"
+    },
+    "Microsoft.OpenApi/1.2.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Nug3rO+7Kl5/SBAadzSMAVgqDlfGjJZ0GenQrLywJ84XGKO0uRqkunz5Wyl0SDwcR71bAATXvSdbdzPrYRYKGw==",
+      "path": "microsoft.openapi/1.2.3",
+      "hashPath": "microsoft.openapi.1.2.3.nupkg.sha512"
+    },
+    "Swashbuckle.AspNetCore/6.5.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-FK05XokgjgwlCI6wCT+D4/abtQkL1X1/B9Oas6uIwHFmYrIO9WUD5aLC9IzMs9GnHfUXOtXZ2S43gN1mhs5+aA==",
+      "path": "swashbuckle.aspnetcore/6.5.0",
+      "hashPath": "swashbuckle.aspnetcore.6.5.0.nupkg.sha512"
+    },
+    "Swashbuckle.AspNetCore.Swagger/6.5.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-XWmCmqyFmoItXKFsQSwQbEAsjDKcxlNf1l+/Ki42hcb6LjKL8m5Db69OTvz5vLonMSRntYO1XLqz0OP+n3vKnA==",
+      "path": "swashbuckle.aspnetcore.swagger/6.5.0",
+      "hashPath": "swashbuckle.aspnetcore.swagger.6.5.0.nupkg.sha512"
+    },
+    "Swashbuckle.AspNetCore.SwaggerGen/6.5.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Y/qW8Qdg9OEs7V013tt+94OdPxbRdbhcEbw4NiwGvf4YBcfhL/y7qp/Mjv/cENsQ2L3NqJ2AOu94weBy/h4KvA==",
+      "path": "swashbuckle.aspnetcore.swaggergen/6.5.0",
+      "hashPath": "swashbuckle.aspnetcore.swaggergen.6.5.0.nupkg.sha512"
+    },
+    "Swashbuckle.AspNetCore.SwaggerUI/6.5.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-OvbvxX+wL8skxTBttcBsVxdh73Fag4xwqEU2edh4JMn7Ws/xJHnY/JB1e9RoCb6XpDxUF3hD9A0Z1lEUx40Pfw==",
+      "path": "swashbuckle.aspnetcore.swaggerui/6.5.0",
+      "hashPath": "swashbuckle.aspnetcore.swaggerui.6.5.0.nupkg.sha512"
+    }
+  }
+}

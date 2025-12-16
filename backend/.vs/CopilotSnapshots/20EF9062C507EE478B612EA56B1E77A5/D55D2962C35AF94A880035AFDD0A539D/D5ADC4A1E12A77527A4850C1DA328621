@@ -1,0 +1,119 @@
+﻿using Amazon.CognitoIdentityProvider;
+using Amazon.CognitoIdentityProvider.Model;
+using Microsoft.AspNetCore.Mvc;
+
+namespace NorthStar.API.Controllers;
+
+[ApiController]
+[Route("api/users")]
+public class UserController : ControllerBase
+{
+    private readonly IAmazonCognitoIdentityProvider _cognitoClient;
+    private readonly IConfiguration _configuration;
+    private readonly string _userPoolId;
+
+    public UserController(IAmazonCognitoIdentityProvider cognitoClient, IConfiguration configuration)
+    {
+        _cognitoClient = cognitoClient;
+        _configuration = configuration;
+        _userPoolId = _configuration["AWS:UserPoolId"] ?? throw new ArgumentNullException("AWS:UserPoolId is not configured");
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetUsers()
+    {
+        var request = new ListUsersRequest
+        {
+            UserPoolId = _userPoolId
+        };
+
+        try
+        {
+            var response = await _cognitoClient.ListUsersAsync(request);
+
+            var users = response.Users.Select(user => new
+            {
+                Username = user.Username,
+                Email = user.Attributes.FirstOrDefault(a => a.Name == "email")?.Value,
+                Role = user.Attributes.FirstOrDefault(a => a.Name == "custom:role")?.Value,
+                Status = user.UserStatus.Value,
+                Created = user.UserCreateDate,
+                LastModified = user.UserLastModifiedDate,
+                Enabled = user.Enabled
+            });
+
+            return Ok(users);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"[DIAGNOSTIC] Error in GetUsers: {ex.Message}");
+            Console.WriteLine($"[DIAGNOSTIC] Stack Trace: {ex.StackTrace}");
+            if (ex.InnerException != null)
+            {
+                Console.WriteLine($"[DIAGNOSTIC] Inner Exception: {ex.InnerException.Message}");
+                Console.WriteLine($"[DIAGNOSTIC] Inner Stack Trace: {ex.InnerException.StackTrace}");
+            }
+            return StatusCode(500, $"Error listing users: {ex.Message}. Check server logs for details.");
+        }
+    }
+
+    [HttpPut("{username}/role")]
+    public async Task<IActionResult> UpdateUserRole(string username, [FromBody] UpdateRoleRequest request)
+    {
+        var updateRequest = new AdminUpdateUserAttributesRequest
+        {
+            UserPoolId = _userPoolId,
+            Username = username,
+            UserAttributes = new List<AttributeType>
+            {
+                new AttributeType
+                {
+                    Name = "custom:role",
+                    Value = request.Role
+                }
+            }
+        };
+
+        try
+        {
+            await _cognitoClient.AdminUpdateUserAttributesAsync(updateRequest);
+            return Ok(new { message = "User role updated successfully" });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"Error updating user role: {ex.Message}");
+        }
+    }
+
+    [HttpPost("{username}/password")]
+    public async Task<IActionResult> SetUserPassword(string username, [FromBody] SetPasswordRequest request)
+    {
+        var setPasswordRequest = new AdminSetUserPasswordRequest
+        {
+            UserPoolId = _userPoolId,
+            Username = username,
+            Password = request.Password,
+            Permanent = true
+        };
+
+        try
+        {
+            await _cognitoClient.AdminSetUserPasswordAsync(setPasswordRequest);
+            return Ok(new { message = "User password updated successfully" });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"Error updating user password: {ex.Message}");
+        }
+    }
+
+    public class UpdateRoleRequest
+    {
+        public string Role { get; set; } = string.Empty;
+    }
+
+    public class SetPasswordRequest
+    {
+        public string Password { get; set; } = string.Empty;
+    }
+}
