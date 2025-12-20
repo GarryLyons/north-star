@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import RichTextEditor from "@/components/RichTextEditor";
+import { fetchWithKey } from "@/utils/api";
 
 interface Pathway {
     id: string;
@@ -37,7 +38,7 @@ export default function PathwayDetail() {
 
     async function fetchPathway() {
         try {
-            const res = await fetch(`http://127.0.0.1:5271/api/v1/departments/${departmentId}/pathways/${pathwayId}`);
+            const res = await fetchWithKey(`http://127.0.0.1:5271/api/v1/departments/${departmentId}/pathways/${pathwayId}`);
             if (res.ok) {
                 const data = await res.json();
                 setPathway(data);
@@ -58,7 +59,7 @@ export default function PathwayDetail() {
 
     async function handleSave() {
         try {
-            const res = await fetch(`http://127.0.0.1:5271/api/v1/departments/${departmentId}/pathways/${pathwayId}`, {
+            const res = await fetchWithKey(`http://127.0.0.1:5271/api/v1/departments/${departmentId}/pathways/${pathwayId}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -176,7 +177,7 @@ function StagesList({ pathwayId, institutionId, departmentId }: { pathwayId: str
 
     async function fetchStages() {
         try {
-            const res = await fetch(`http://127.0.0.1:5271/api/v1/pathways/${pathwayId}/stages`);
+            const res = await fetchWithKey(`http://127.0.0.1:5271/api/v1/pathways/${pathwayId}/stages`);
             if (res.ok) {
                 const data = await res.json();
                 setStages(data);

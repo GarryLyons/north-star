@@ -4,6 +4,7 @@ import { useAuthenticator } from "@aws-amplify/ui-react";
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import { fetchWithKey } from "@/utils/api";
 
 export default function NewPathway() {
     const router = useRouter();
@@ -20,7 +21,7 @@ export default function NewPathway() {
         setLoading(true);
 
         try {
-            const res = await fetch(`http://127.0.0.1:5271/api/v1/departments/${departmentId}/pathways`, {
+            const res = await fetchWithKey(`http://127.0.0.1:5271/api/v1/departments/${departmentId}/pathways`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

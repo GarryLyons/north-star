@@ -39,3 +39,13 @@ C:\Source\north-star\backend\obj\Debug\net10.0\refint\NorthStar.API.dll
 C:\Source\north-star\backend\obj\Debug\net10.0\NorthStar.API.pdb
 C:\Source\north-star\backend\obj\Debug\net10.0\NorthStar.API.genruntimeconfig.cache
 C:\Source\north-star\backend\obj\Debug\net10.0\ref\NorthStar.API.dll
+C:\Source\north-star\backend\bin\Debug\net10.0\Amazon.Lambda.APIGatewayEvents.dll
+C:\Source\north-star\backend\bin\Debug\net10.0\Amazon.Lambda.ApplicationLoadBalancerEvents.dll
+C:\Source\north-star\backend\bin\Debug\net10.0\Amazon.Lambda.AspNetCoreServer.dll
+C:\Source\north-star\backend\bin\Debug\net10.0\Amazon.Lambda.AspNetCoreServer.Hosting.dll
+C:\Source\north-star\backend\bin\Debug\net10.0\Amazon.Lambda.Core.dll
+C:\Source\north-star\backend\bin\Debug\net10.0\Amazon.Lambda.Logging.AspNetCore.dll
+C:\Source\north-star\backend\bin\Debug\net10.0\Amazon.Lambda.RuntimeSupport.dll
+C:\Source\north-star\backend\bin\Debug\net10.0\Amazon.Lambda.Serialization.SystemTextJson.dll
+C:\Source\north-star\backend\bin\Debug\net10.0\SnapshotRestore.Registry.dll
+C:\Source\north-star\backend\obj\Debug\net10.0\NorthStar.API.sourcelink.json

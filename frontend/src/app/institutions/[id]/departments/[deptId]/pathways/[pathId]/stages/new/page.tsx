@@ -5,6 +5,7 @@ import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import RichTextEditor from "@/components/RichTextEditor";
+import { fetchWithKey } from "@/utils/api";
 
 // Types
 interface CaregiverTip { summary: string; description: string; }
@@ -56,7 +57,7 @@ export default function NewStage() {
         };
 
         try {
-            const res = await fetch(`http://127.0.0.1:5271/api/v1/pathways/${pathwayId}/stages`, {
+            const res = await fetchWithKey(`http://127.0.0.1:5271/api/v1/pathways/${pathwayId}/stages`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(stageData),

@@ -1,0 +1,312 @@
+[
+  {
+    "ContainingType": "NorthStar.API.Controllers.PathwayController",
+    "Method": "CreatePathway",
+    "RelativePath": "api/v1/departments/{departmentId}/pathways",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "departmentId",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "pathway",
+        "Type": "NorthStar.API.Models.Pathway",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NorthStar.API.Controllers.PathwayController",
+    "Method": "ListPathways",
+    "RelativePath": "api/v1/departments/{departmentId}/pathways",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "departmentId",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NorthStar.API.Controllers.PathwayController",
+    "Method": "GetPathway",
+    "RelativePath": "api/v1/departments/{departmentId}/pathways/{pathwayId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "departmentId",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "pathwayId",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NorthStar.API.Controllers.PathwayController",
+    "Method": "UpdatePathway",
+    "RelativePath": "api/v1/departments/{departmentId}/pathways/{pathwayId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "departmentId",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "pathwayId",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "pathway",
+        "Type": "NorthStar.API.Models.Pathway",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NorthStar.API.Controllers.InstitutionController",
+    "Method": "CreateInstitution",
+    "RelativePath": "api/v1/institutions",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "institution",
+        "Type": "NorthStar.API.Models.Institution",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NorthStar.API.Controllers.InstitutionController",
+    "Method": "ListInstitutions",
+    "RelativePath": "api/v1/institutions",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NorthStar.API.Controllers.InstitutionController",
+    "Method": "UpdateInstitution",
+    "RelativePath": "api/v1/institutions/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "institution",
+        "Type": "NorthStar.API.Models.Institution",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NorthStar.API.Controllers.InstitutionController",
+    "Method": "GetInstitution",
+    "RelativePath": "api/v1/institutions/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NorthStar.API.Controllers.DepartmentController",
+    "Method": "CreateDepartment",
+    "RelativePath": "api/v1/institutions/{institutionId}/departments",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "institutionId",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "department",
+        "Type": "NorthStar.API.Models.Department",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NorthStar.API.Controllers.DepartmentController",
+    "Method": "ListDepartments",
+    "RelativePath": "api/v1/institutions/{institutionId}/departments",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "institutionId",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NorthStar.API.Controllers.DepartmentController",
+    "Method": "GetDepartment",
+    "RelativePath": "api/v1/institutions/{institutionId}/departments/{departmentId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "institutionId",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "departmentId",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NorthStar.API.Controllers.StageController",
+    "Method": "CreateStage",
+    "RelativePath": "api/v1/pathways/{pathwayId}/stages",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "pathwayId",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "stage",
+        "Type": "NorthStar.API.Models.Stage",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NorthStar.API.Controllers.StageController",
+    "Method": "ListStages",
+    "RelativePath": "api/v1/pathways/{pathwayId}/stages",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "pathwayId",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NorthStar.API.Controllers.StageController",
+    "Method": "GetStage",
+    "RelativePath": "api/v1/pathways/{pathwayId}/stages/{stageId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "pathwayId",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "stageId",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NorthStar.API.Controllers.StageController",
+    "Method": "UpdateStage",
+    "RelativePath": "api/v1/pathways/{pathwayId}/stages/{stageId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "pathwayId",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "stageId",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "stage",
+        "Type": "NorthStar.API.Models.Stage",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "NorthStar.API.Controllers.StageController",
+    "Method": "DeleteStage",
+    "RelativePath": "api/v1/pathways/{pathwayId}/stages/{stageId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "pathwayId",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "stageId",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]

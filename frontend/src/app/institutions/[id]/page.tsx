@@ -4,6 +4,7 @@ import { useAuthenticator } from "@aws-amplify/ui-react";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import { fetchWithKey } from "@/utils/api";
 
 interface Institution {
     id: string;
@@ -28,7 +29,7 @@ export default function InstitutionDetail() {
 
     async function fetchInstitution(id: string) {
         try {
-            const res = await fetch(`http://127.0.0.1:5271/api/v1/institutions/${id}`);
+            const res = await fetchWithKey(`http://127.0.0.1:5271/api/v1/institutions/${id}`);
             if (res.ok) {
                 const data = await res.json();
                 setFormData(data);
@@ -62,7 +63,7 @@ export default function InstitutionDetail() {
             // POST usually creates new.
             // I will implement PUT in backend quickly as well.
 
-            const res = await fetch(`http://127.0.0.1:5271/api/v1/institutions/${formData.id}`, {
+            const res = await fetchWithKey(`http://127.0.0.1:5271/api/v1/institutions/${formData.id}`, {
                 method: "PUT", // Need to implement this backend side
                 headers: {
                     "Content-Type": "application/json",
@@ -192,7 +193,7 @@ function DepartmentsList({ institutionId }: { institutionId: string }) {
 
     async function fetchDepartments() {
         try {
-            const res = await fetch(`http://127.0.0.1:5271/api/v1/institutions/${institutionId}/departments`);
+            const res = await fetchWithKey(`http://127.0.0.1:5271/api/v1/institutions/${institutionId}/departments`);
             if (res.ok) {
                 const data = await res.json();
                 setDepartments(data);

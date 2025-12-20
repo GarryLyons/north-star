@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Amazon.Lambda.AspNetCoreServer.Hosting" Version="1.9.0" />
     <PackageReference Include="AWSSDK.Core" Version="4.0.3.6" />
     <PackageReference Include="AWSSDK.DynamoDBv2" Version="4.0.10.4" />
     <PackageReference Include="AWSSDK.SSOOIDC" Version="4.0.3.9" />

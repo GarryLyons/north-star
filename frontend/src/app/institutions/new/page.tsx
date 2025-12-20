@@ -4,6 +4,7 @@ import { useAuthenticator } from "@aws-amplify/ui-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import { fetchWithKey } from "@/utils/api";
 
 export default function NewInstitution() {
     const router = useRouter();
@@ -24,7 +25,7 @@ export default function NewInstitution() {
         console.log("Sending POST request to:", apiUrl);
 
         try {
-            const res = await fetch(apiUrl, {
+            const res = await fetchWithKey(apiUrl, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

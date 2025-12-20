@@ -1,0 +1,62 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: 'NorthStar API
+
+  Serverless backend for NorthStar CMS.
+
+  '
+Globals:
+  Function:
+    Timeout: 10
+    MemorySize: 256
+    Runtime: dotnet8
+    Architectures:
+    - x86_64
+Resources:
+  NorthStarHttpApi:
+    Type: AWS::Serverless::HttpApi
+    Properties:
+      StageName: $default
+      Auth:
+        DefaultAuthorizer: AWS_IAM
+        EnableIamAuthorizer: true
+  NorthStarApiFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: NorthStarApiFunction
+      Handler: NorthStar.API
+      Policies:
+      - DynamoDBCrudPolicy:
+          TableName:
+            Fn::Sub: DEPT-*
+      - Statement:
+          Effect: Allow
+          Action:
+          - dynamodb:ListTables
+          - dynamodb:DescribeTable
+          - dynamodb:Query
+          - dynamodb:Scan
+          - dynamodb:GetItem
+          - dynamodb:PutItem
+          - dynamodb:UpdateItem
+          - dynamodb:DeleteItem
+          Resource: '*'
+      Events:
+        Api:
+          Type: HttpApi
+          Properties:
+            ApiId:
+              Ref: NorthStarHttpApi
+            Path: /{proxy+}
+            Method: any
+    Metadata:
+      SamResourceId: NorthStarApiFunction
+Outputs:
+  ApiUrl:
+    Description: URL of the API Gateway endpoint
+    Value:
+      Fn::Sub: https://${NorthStarHttpApi}.execute-api.${AWS::Region}.amazonaws.com
+  HttpApiId:
+    Description: API Gateway HTTP API ID
+    Value:
+      Ref: NorthStarHttpApi

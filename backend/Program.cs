@@ -1,5 +1,6 @@
 using Amazon.CognitoIdentityProvider;
 using Amazon.Runtime.CredentialManagement;
+using Microsoft.Extensions.Primitives;
 
 var chain = new CredentialProfileStoreChain();
 if (chain.TryGetProfile("northstar", out var profile))
@@ -19,6 +20,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers();
+
+// Add Lambda Hosting for API Gateway (HTTP API v2)
+builder.Services.AddAWSLambdaHosting(LambdaEventSource.HttpApi);
 
 var awsOptions = builder.Configuration.GetAWSOptions();
 Console.WriteLine($"[DIAGNOSTIC] Loaded AWS Options from Configuration:");
@@ -80,6 +84,33 @@ if (app.Environment.IsDevelopment())
 // app.UseHttpsRedirection();
 
 app.UseCors("AllowAll");
+
+app.Use(async (context, next) =>
+{
+    var apiKey = app.Configuration["ApiKey"];
+    if (!string.IsNullOrEmpty(apiKey))
+    {
+        Console.WriteLine($"[DIAGNOSTIC] API Key: {apiKey}");
+        if (context.Request.Method == "OPTIONS")
+        {
+            await next();
+            return;
+        }
+        // extract x-api-key header value and log it out
+
+        if (!context.Request.Headers.TryGetValue("x-api-key", out var extractedApiKey) ||
+            StringValues.IsNullOrEmpty(extractedApiKey) ||
+            extractedApiKey != apiKey)
+        {
+            Console.WriteLine($"[DIAGNOSTIC] Invalid API Key: {extractedApiKey}");
+            context.Response.StatusCode = 401;
+            await context.Response.WriteAsync("Unauthorized: Invalid API Key");
+            return;
+        }
+
+    }
+    await next();
+});
 
 app.MapControllers();
 

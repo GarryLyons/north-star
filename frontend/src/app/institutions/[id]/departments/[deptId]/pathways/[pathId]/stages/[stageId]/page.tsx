@@ -5,6 +5,7 @@ import { useParams, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import RichTextEditor from "@/components/RichTextEditor";
+import { fetchWithKey } from "@/utils/api";
 
 // Types
 interface CaregiverTip { summary: string; description: string; }
@@ -47,7 +48,7 @@ export default function EditStage() {
 
     async function fetchStage() {
         try {
-            const res = await fetch(`http://127.0.0.1:5271/api/v1/pathways/${pathwayId}/stages/${stageId}`);
+            const res = await fetchWithKey(`http://127.0.0.1:5271/api/v1/pathways/${pathwayId}/stages/${stageId}`);
             if (res.ok) {
                 const data = await res.json();
                 setTitle(data.title);
@@ -89,7 +90,7 @@ export default function EditStage() {
         };
 
         try {
-            const res = await fetch(`http://127.0.0.1:5271/api/v1/pathways/${pathwayId}/stages/${stageId}`, {
+            const res = await fetchWithKey(`http://127.0.0.1:5271/api/v1/pathways/${pathwayId}/stages/${stageId}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(stageData),
@@ -132,7 +133,7 @@ export default function EditStage() {
                     type="button"
                     onClick={async () => {
                         if (!confirm("Are you sure?")) return;
-                        await fetch(`http://127.0.0.1:5271/api/v1/pathways/${pathwayId}/stages/${stageId}`, { method: 'DELETE' });
+                        await fetchWithKey(`http://127.0.0.1:5271/api/v1/pathways/${pathwayId}/stages/${stageId}`, { method: 'DELETE' });
                         router.push(`/institutions/${institutionId}/departments/${departmentId}/pathways/${pathwayId}`);
                     }}
                     className="text-red-600 hover:text-red-800 text-sm font-medium"

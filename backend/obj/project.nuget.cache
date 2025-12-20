@@ -1,9 +1,17 @@
 {
   "version": 2,
-  "dgSpecHash": "D4eJwaTk1yU=",
+  "dgSpecHash": "qGa/ikq9I8A=",
   "success": true,
   "projectFilePath": "C:\\Source\\north-star\\backend\\NorthStar.API.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\garry\\.nuget\\packages\\amazon.lambda.apigatewayevents\\2.7.1\\amazon.lambda.apigatewayevents.2.7.1.nupkg.sha512",
+    "C:\\Users\\garry\\.nuget\\packages\\amazon.lambda.applicationloadbalancerevents\\2.2.0\\amazon.lambda.applicationloadbalancerevents.2.2.0.nupkg.sha512",
+    "C:\\Users\\garry\\.nuget\\packages\\amazon.lambda.aspnetcoreserver\\9.2.0\\amazon.lambda.aspnetcoreserver.9.2.0.nupkg.sha512",
+    "C:\\Users\\garry\\.nuget\\packages\\amazon.lambda.aspnetcoreserver.hosting\\1.9.0\\amazon.lambda.aspnetcoreserver.hosting.1.9.0.nupkg.sha512",
+    "C:\\Users\\garry\\.nuget\\packages\\amazon.lambda.core\\2.7.0\\amazon.lambda.core.2.7.0.nupkg.sha512",
+    "C:\\Users\\garry\\.nuget\\packages\\amazon.lambda.logging.aspnetcore\\4.1.0\\amazon.lambda.logging.aspnetcore.4.1.0.nupkg.sha512",
+    "C:\\Users\\garry\\.nuget\\packages\\amazon.lambda.runtimesupport\\1.13.1\\amazon.lambda.runtimesupport.1.13.1.nupkg.sha512",
+    "C:\\Users\\garry\\.nuget\\packages\\amazon.lambda.serialization.systemtextjson\\2.4.4\\amazon.lambda.serialization.systemtextjson.2.4.4.nupkg.sha512",
     "C:\\Users\\garry\\.nuget\\packages\\awssdk.cognitoidentityprovider\\4.0.4.8\\awssdk.cognitoidentityprovider.4.0.4.8.nupkg.sha512",
     "C:\\Users\\garry\\.nuget\\packages\\awssdk.core\\4.0.3.6\\awssdk.core.4.0.3.6.nupkg.sha512",
     "C:\\Users\\garry\\.nuget\\packages\\awssdk.dynamodbv2\\4.0.10.4\\awssdk.dynamodbv2.4.0.10.4.nupkg.sha512",
@@ -12,10 +20,12 @@
     "C:\\Users\\garry\\.nuget\\packages\\awssdk.ssooidc\\4.0.3.9\\awssdk.ssooidc.4.0.3.9.nupkg.sha512",
     "C:\\Users\\garry\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
     "C:\\Users\\garry\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
+    "C:\\Users\\garry\\.nuget\\packages\\snapshotrestore.registry\\1.0.1\\snapshotrestore.registry.1.0.1.nupkg.sha512",
     "C:\\Users\\garry\\.nuget\\packages\\swashbuckle.aspnetcore\\6.5.0\\swashbuckle.aspnetcore.6.5.0.nupkg.sha512",
     "C:\\Users\\garry\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.5.0\\swashbuckle.aspnetcore.swagger.6.5.0.nupkg.sha512",
     "C:\\Users\\garry\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.5.0\\swashbuckle.aspnetcore.swaggergen.6.5.0.nupkg.sha512",
-    "C:\\Users\\garry\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\6.5.0\\swashbuckle.aspnetcore.swaggerui.6.5.0.nupkg.sha512"
+    "C:\\Users\\garry\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\6.5.0\\swashbuckle.aspnetcore.swaggerui.6.5.0.nupkg.sha512",
+    "C:\\Users\\garry\\.nuget\\packages\\microsoft.netcore.app.host.linux-x64\\10.0.1\\microsoft.netcore.app.host.linux-x64.10.0.1.nupkg.sha512"
   ],
   "logs": []
 }
