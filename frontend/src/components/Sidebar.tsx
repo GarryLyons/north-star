@@ -13,7 +13,7 @@ const navigation = [
 
 export default function Sidebar() {
     const pathname = usePathname();
-    const { user } = useAuthenticator((context) => [context.user]);
+    const { user, signOut } = useAuthenticator((context) => [context.user]);
 
     if (!user) return null; // Don't show sidebar if not logged in (or let layout handle it)
 
@@ -37,6 +37,17 @@ export default function Sidebar() {
                     );
                 })}
             </nav>
+            <div className="p-4 border-t border-gray-800">
+                <div className="mb-4 px-2 text-sm text-gray-400 truncate">
+                    {user?.signInDetails?.loginId || user.username}
+                </div>
+                <button
+                    onClick={signOut}
+                    className="w-full flex items-center justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
+                >
+                    Sign out
+                </button>
+            </div>
         </div>
     );
 }
