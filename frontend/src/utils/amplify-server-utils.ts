@@ -1,9 +1,11 @@
 import { SignatureV4 } from "@aws-sdk/signature-v4";
 import { defaultProvider } from "@aws-sdk/credential-provider-node";
+import { fromIni } from "@aws-sdk/credential-providers"; // Import explicit file provider
 import { HttpRequest } from "@aws-sdk/protocol-http";
 
 const REGION = process.env.AWS_REGION || "eu-west-2";
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5271";
+const AWS_PROFILE = process.env.AWS_PROFILE;
 
 export async function fetchWithSigV4(
     path: string,
@@ -16,8 +18,14 @@ export async function fetchWithSigV4(
     }
 
     const endpoint = new URL(path, API_URL);
+
+    // Explicitly use profile if set, otherwise default chain
+    const credentials = AWS_PROFILE
+        ? fromIni({ profile: AWS_PROFILE })
+        : defaultProvider();
+
     const signer = new SignatureV4({
-        credentials: defaultProvider(),
+        credentials,
         region: REGION,
         service: "execute-api",
         sha256: (await import("@aws-crypto/sha256-js")).Sha256,

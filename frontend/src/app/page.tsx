@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useAuthenticator } from "@aws-amplify/ui-react";
 import { useRouter } from "next/navigation";
-import { fetchWithKey } from "@/utils/api";
+import { getInstitutions } from "@/app/actions/institutions";
 
 interface Institution {
   id: string;
@@ -31,14 +31,9 @@ export default function Home() {
 
   async function fetchInstitutions() {
     try {
-      // Use 127.0.0.1 to avoid CORS/Network issues
-      const res = await fetchWithKey("http://127.0.0.1:5271/api/v1/institutions");
-      if (res.ok) {
-        const data = await res.json();
-        setInstitutions(data);
-      } else {
-        console.error("Failed to fetch institutions");
-      }
+      console.log("Fetching institutions list using Server Action...");
+      const data = await getInstitutions();
+      setInstitutions(data);
     } catch (error) {
       console.error("Error fetching institutions:", error);
     } finally {

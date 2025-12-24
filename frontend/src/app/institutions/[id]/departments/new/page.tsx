@@ -4,7 +4,7 @@ import { useAuthenticator } from "@aws-amplify/ui-react";
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import Breadcrumbs from "@/components/Breadcrumbs";
-import { fetchWithKey } from "@/utils/api";
+import { createDepartment } from "@/app/actions/institutions";
 
 export default function NewDepartment() {
     const router = useRouter();
@@ -20,21 +20,8 @@ export default function NewDepartment() {
         setLoading(true);
 
         try {
-            const res = await fetchWithKey(`http://127.0.0.1:5271/api/v1/institutions/${institutionId}/departments`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ name }),
-            });
-
-            if (res.ok) {
-                router.push(`/institutions/${institutionId}`);
-            } else {
-                const errorText = await res.text();
-                console.error("Failed to create department. Status:", res.status, errorText);
-                alert(`Failed to create department: ${res.status} ${errorText}`);
-            }
+            await createDepartment(institutionId, { name });
+            router.push(`/institutions/${institutionId}`);
         } catch (error) {
             console.error("Error creating department:", error);
             alert("Error creating department: " + String(error));

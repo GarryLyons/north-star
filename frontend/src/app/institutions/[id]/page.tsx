@@ -4,7 +4,7 @@ import { useAuthenticator } from "@aws-amplify/ui-react";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Breadcrumbs from "@/components/Breadcrumbs";
-import { fetchWithKey } from "@/utils/api";
+import { getInstitution, updateInstitution, getDepartments } from "@/app/actions/institutions";
 
 interface Institution {
     id: string;
@@ -29,13 +29,8 @@ export default function InstitutionDetail() {
 
     async function fetchInstitution(id: string) {
         try {
-            const res = await fetchWithKey(`http://127.0.0.1:5271/api/v1/institutions/${id}`);
-            if (res.ok) {
-                const data = await res.json();
-                setFormData(data);
-            } else {
-                console.error("Failed to fetch institution");
-            }
+            const data = await getInstitution(id);
+            setFormData(data);
         } catch (error) {
             console.error("Error fetching institution:", error);
         } finally {
@@ -63,21 +58,9 @@ export default function InstitutionDetail() {
             // POST usually creates new.
             // I will implement PUT in backend quickly as well.
 
-            const res = await fetchWithKey(`http://127.0.0.1:5271/api/v1/institutions/${formData.id}`, {
-                method: "PUT", // Need to implement this backend side
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(formData),
-            });
-
-            if (res.ok) {
-                alert("Institution updated successfully");
-                router.push("/institutions");
-            } else {
-                // Fallback for now if 405/404
-                alert("Update failed (Backend might not support update yet)");
-            }
+            await updateInstitution(formData.id, formData);
+            alert("Institution updated successfully");
+            router.push("/institutions");
         } catch (error) {
             console.error("Error updating institution:", error);
         } finally {
@@ -193,11 +176,8 @@ function DepartmentsList({ institutionId }: { institutionId: string }) {
 
     async function fetchDepartments() {
         try {
-            const res = await fetchWithKey(`http://127.0.0.1:5271/api/v1/institutions/${institutionId}/departments`);
-            if (res.ok) {
-                const data = await res.json();
-                setDepartments(data);
-            }
+            const data = await getDepartments(institutionId);
+            setDepartments(data);
         } catch (error) {
             console.error("Failed to fetch departments", error);
         }

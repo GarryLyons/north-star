@@ -28,3 +28,30 @@ export async function getInstitution(id: string) {
         throw error;
     }
 }
+
+export async function updateInstitution(id: string, data: any) {
+    try {
+        return await fetchWithSigV4(`/api/v1/institutions/${id}`, "PUT", data);
+    } catch (error) {
+        console.error(`Failed to update institution ${id}:`, error);
+        throw error;
+    }
+}
+
+export async function getDepartments(institutionId: string) {
+    try {
+        return await fetchWithSigV4(`/api/v1/institutions/${institutionId}/departments`);
+    } catch (error) {
+        console.error(`Failed to fetch departments for institution ${institutionId}:`, error);
+        throw error;
+    }
+}
+
+export async function createDepartment(institutionId: string, data: any) {
+    try {
+        return await fetchWithSigV4(`/api/v1/institutions/${institutionId}/departments`, "POST", data);
+    } catch (error) {
+        console.error(`Failed to create department for institution ${institutionId}:`, error);
+        throw error;
+    }
+}

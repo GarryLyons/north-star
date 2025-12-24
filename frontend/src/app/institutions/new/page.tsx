@@ -4,7 +4,7 @@ import { useAuthenticator } from "@aws-amplify/ui-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Breadcrumbs from "@/components/Breadcrumbs";
-import { fetchWithKey } from "@/utils/api";
+import { createInstitution } from "@/app/actions/institutions";
 
 export default function NewInstitution() {
     const router = useRouter();
@@ -21,27 +21,11 @@ export default function NewInstitution() {
         setLoading(true);
 
         console.log("handleSubmit called. Submitting form data:", formData);
-        const apiUrl = "http://127.0.0.1:5271/api/v1/institutions";
-        console.log("Sending POST request to:", apiUrl);
 
         try {
-            const res = await fetchWithKey(apiUrl, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(formData),
-            });
-
-            console.log("Response received. Status:", res.status);
-
-            if (res.ok) {
-                router.push("/"); // Redirect to Dashboard (root) instead of /institutions
-            } else {
-                const errorText = await res.text();
-                console.error("Failed to create institution. Status:", res.status, "Message:", errorText);
-                alert(`Failed to create institution: ${res.status} ${errorText}`);
-            }
+            await createInstitution(formData);
+            console.log("Institution created successfully");
+            router.push("/"); // Redirect to Dashboard (root)
         } catch (error) {
             console.error("NETWORK/FETCH ERROR creating institution:", error);
             alert("Error creating institution: " + (error instanceof Error ? error.message : String(error)));
