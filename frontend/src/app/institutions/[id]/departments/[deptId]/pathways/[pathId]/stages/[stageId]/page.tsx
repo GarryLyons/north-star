@@ -5,7 +5,7 @@ import { useParams, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import RichTextEditor from "@/components/RichTextEditor";
-import { fetchWithKey } from "@/utils/api";
+import { getStage, updateStage, deleteStage } from "@/app/actions/institutions";
 
 // Types
 interface CaregiverTip { summary: string; description: string; }
@@ -48,22 +48,17 @@ export default function EditStage() {
 
     async function fetchStage() {
         try {
-            const res = await fetchWithKey(`http://127.0.0.1:5271/api/v1/pathways/${pathwayId}/stages/${stageId}`);
-            if (res.ok) {
-                const data = await res.json();
-                setTitle(data.title);
-                setSummary(data.summary);
-                setIntroduction(data.introduction);
-                setDuration(data.estimatedDuration);
-                setOrder(data.order);
-                setHymfTitle(data.howYouMightFeelTitle || "How You Might Feel");
-                setHymfDescription(data.howYouMightFeelDescription || "");
-                setTips(data.caregiverTips || []);
-                setQuestions(data.reflectiveQuestions || []);
-                setResources(data.onlineResources || []);
-            } else {
-                console.error("Failed to fetch stage");
-            }
+            const data = await getStage(pathwayId as string, stageId as string);
+            setTitle(data.title);
+            setSummary(data.summary);
+            setIntroduction(data.introduction);
+            setDuration(data.estimatedDuration);
+            setOrder(data.order);
+            setHymfTitle(data.howYouMightFeelTitle || "How You Might Feel");
+            setHymfDescription(data.howYouMightFeelDescription || "");
+            setTips(data.caregiverTips || []);
+            setQuestions(data.reflectiveQuestions || []);
+            setResources(data.onlineResources || []);
         } catch (e) {
             console.error(e);
         } finally {
@@ -90,19 +85,11 @@ export default function EditStage() {
         };
 
         try {
-            const res = await fetchWithKey(`http://127.0.0.1:5271/api/v1/pathways/${pathwayId}/stages/${stageId}`, {
-                method: "PUT",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(stageData),
-            });
-
-            if (res.ok) {
-                router.push(`/institutions/${institutionId}/departments/${departmentId}/pathways/${pathwayId}`);
-            } else {
-                alert("Failed to update stage");
-            }
+            await updateStage(pathwayId as string, stageId as string, stageData);
+            router.push(`/institutions/${institutionId}/departments/${departmentId}/pathways/${pathwayId}`);
         } catch (error) {
             console.error(error);
+            alert("Failed to update stage");
         }
     }
 
@@ -133,7 +120,7 @@ export default function EditStage() {
                     type="button"
                     onClick={async () => {
                         if (!confirm("Are you sure?")) return;
-                        await fetchWithKey(`http://127.0.0.1:5271/api/v1/pathways/${pathwayId}/stages/${stageId}`, { method: 'DELETE' });
+                        await deleteStage(pathwayId as string, stageId as string);
                         router.push(`/institutions/${institutionId}/departments/${departmentId}/pathways/${pathwayId}`);
                     }}
                     className="text-red-600 hover:text-red-800 text-sm font-medium"

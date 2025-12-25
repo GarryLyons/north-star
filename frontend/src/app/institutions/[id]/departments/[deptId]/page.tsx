@@ -4,7 +4,7 @@ import { useAuthenticator } from "@aws-amplify/ui-react";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Breadcrumbs from "@/components/Breadcrumbs";
-import { fetchWithKey } from "@/utils/api";
+import { getDepartment, getPathways } from "@/app/actions/institutions";
 
 interface Department {
     id: string;
@@ -31,13 +31,8 @@ export default function DepartmentDetail() {
 
     async function fetchDepartment() {
         try {
-            const res = await fetchWithKey(`http://127.0.0.1:5271/api/v1/institutions/${institutionId}/departments/${departmentId}`);
-            if (res.ok) {
-                const data = await res.json();
-                setDepartment(data);
-            } else {
-                console.error("Failed to fetch department");
-            }
+            const data = await getDepartment(institutionId, departmentId);
+            setDepartment(data);
         } catch (error) {
             console.error("Error fetching department:", error);
         } finally {
@@ -100,11 +95,8 @@ function PathwaysList({ institutionId, departmentId }: { institutionId: string; 
 
     async function fetchPathways() {
         try {
-            const res = await fetchWithKey(`http://127.0.0.1:5271/api/v1/departments/${departmentId}/pathways`);
-            if (res.ok) {
-                const data = await res.json();
-                setPathways(data);
-            }
+            const data = await getPathways(departmentId);
+            setPathways(data);
         } catch (error) {
             console.error("Failed to fetch pathways", error);
         }

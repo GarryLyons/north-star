@@ -55,3 +55,96 @@ export async function createDepartment(institutionId: string, data: any) {
         throw error;
     }
 }
+
+export async function getDepartment(institutionId: string, departmentId: string) {
+    try {
+        return await fetchWithSigV4(`/api/v1/institutions/${institutionId}/departments/${departmentId}`);
+    } catch (error) {
+        console.error(`Failed to fetch department ${departmentId} for institution ${institutionId}:`, error);
+        throw error;
+    }
+}
+
+export async function getPathways(departmentId: string) {
+    try {
+        return await fetchWithSigV4(`/api/v1/departments/${departmentId}/pathways`);
+    } catch (error) {
+        console.error(`Failed to fetch pathways for department ${departmentId}:`, error);
+        throw error;
+    }
+}
+
+export async function createPathway(departmentId: string, data: any) {
+    try {
+        return await fetchWithSigV4(`/api/v1/departments/${departmentId}/pathways`, "POST", data);
+    } catch (error) {
+        console.error(`Failed to create pathway for department ${departmentId}:`, error);
+        throw error;
+    }
+}
+
+export async function updatePathway(pathwayId: string, data: any) {
+    try {
+        return await fetchWithSigV4(`/api/v1/pathways/${pathwayId}`, "PUT", data);
+    } catch (error) {
+        console.error(`Failed to update pathway ${pathwayId}:`, error);
+        throw error;
+    }
+}
+
+export async function getPathway(pathwayId: string) {
+    try {
+        return await fetchWithSigV4(`/api/v1/pathways/${pathwayId}`);
+    } catch (error) {
+        console.error(`Failed to fetch pathway ${pathwayId}:`, error);
+        throw error;
+    }
+}
+
+export async function getStages(pathwayId: string) {
+    try {
+        // Assuming endpoint for stages is implicitly under pathway or fetched with pathway. 
+        // Adjusting to common REST pattern, or if stages are embedded in pathway, this might be redundant.
+        // Based on previous code, stages might be a sub-resource.
+        return await fetchWithSigV4(`/api/v1/pathways/${pathwayId}/stages`);
+    } catch (error) {
+        console.error(`Failed to fetch stages for pathway ${pathwayId}:`, error);
+        throw error;
+    }
+}
+
+export async function createStage(pathwayId: string, data: any) {
+    try {
+        return await fetchWithSigV4(`/api/v1/pathways/${pathwayId}/stages`, "POST", data);
+    } catch (error) {
+        console.error(`Failed to create stage for pathway ${pathwayId}:`, error);
+        throw error;
+    }
+}
+
+export async function getStage(pathwayId: string, stageId: string) {
+    try {
+        return await fetchWithSigV4(`/api/v1/pathways/${pathwayId}/stages/${stageId}`);
+    } catch (error) {
+        console.error(`Failed to fetch stage ${stageId}:`, error);
+        throw error;
+    }
+}
+
+export async function updateStage(pathwayId: string, stageId: string, data: any) {
+    try {
+        return await fetchWithSigV4(`/api/v1/pathways/${pathwayId}/stages/${stageId}`, "PUT", data);
+    } catch (error) {
+        console.error(`Failed to update stage ${stageId}:`, error);
+        throw error;
+    }
+}
+
+export async function deleteStage(pathwayId: string, stageId: string) {
+    try {
+        return await fetchWithSigV4(`/api/v1/pathways/${pathwayId}/stages/${stageId}`, "DELETE");
+    } catch (error) {
+        console.error(`Failed to delete stage ${stageId}:`, error);
+        throw error;
+    }
+}

@@ -4,7 +4,7 @@ import { useAuthenticator } from "@aws-amplify/ui-react";
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import Breadcrumbs from "@/components/Breadcrumbs";
-import { fetchWithKey } from "@/utils/api";
+import { createPathway } from "@/app/actions/institutions";
 
 export default function NewPathway() {
     const router = useRouter();
@@ -21,21 +21,8 @@ export default function NewPathway() {
         setLoading(true);
 
         try {
-            const res = await fetchWithKey(`http://127.0.0.1:5271/api/v1/departments/${departmentId}/pathways`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(formData),
-            });
-
-            if (res.ok) {
-                router.push(`/institutions/${institutionId}/departments/${departmentId}`);
-            } else {
-                const errorText = await res.text();
-                console.error("Failed to create pathway. Status:", res.status, errorText);
-                alert(`Failed to create pathway: ${res.status} ${errorText}`);
-            }
+            await createPathway(departmentId, formData);
+            router.push(`/institutions/${institutionId}/departments/${departmentId}`);
         } catch (error) {
             console.error("Error creating pathway:", error);
             alert("Error creating pathway: " + String(error));

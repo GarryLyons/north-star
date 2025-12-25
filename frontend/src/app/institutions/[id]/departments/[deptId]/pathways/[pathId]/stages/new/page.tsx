@@ -5,7 +5,7 @@ import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import RichTextEditor from "@/components/RichTextEditor";
-import { fetchWithKey } from "@/utils/api";
+import { createStage } from "@/app/actions/institutions";
 
 // Types
 interface CaregiverTip { summary: string; description: string; }
@@ -37,7 +37,7 @@ export default function NewStage() {
     const [newQuestion, setNewQuestion] = useState("");
     const [newResource, setNewResource] = useState({ title: "", url: "" });
 
-    const { id: institutionId, deptId: departmentId, pathId: pathwayId } = params;
+    const { id: institutionId, deptId: departmentId, pathId: pathwayId } = params as { id: string, deptId: string, pathId: string };
 
     async function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
@@ -57,19 +57,11 @@ export default function NewStage() {
         };
 
         try {
-            const res = await fetchWithKey(`http://127.0.0.1:5271/api/v1/pathways/${pathwayId}/stages`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(stageData),
-            });
-
-            if (res.ok) {
-                router.push(`/institutions/${institutionId}/departments/${departmentId}/pathways/${pathwayId}`);
-            } else {
-                alert("Failed to save stage");
-            }
+            await createStage(pathwayId, stageData);
+            router.push(`/institutions/${institutionId}/departments/${departmentId}/pathways/${pathwayId}`);
         } catch (error) {
             console.error(error);
+            alert("Failed to save stage");
         }
     }
 

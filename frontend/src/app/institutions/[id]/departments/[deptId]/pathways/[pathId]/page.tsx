@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import RichTextEditor from "@/components/RichTextEditor";
-import { fetchWithKey } from "@/utils/api";
+import { getPathway, updatePathway, getStages } from "@/app/actions/institutions";
 
 interface Pathway {
     id: string;
@@ -38,18 +38,13 @@ export default function PathwayDetail() {
 
     async function fetchPathway() {
         try {
-            const res = await fetchWithKey(`http://127.0.0.1:5271/api/v1/departments/${departmentId}/pathways/${pathwayId}`);
-            if (res.ok) {
-                const data = await res.json();
-                setPathway(data);
-                setEditForm({
-                    name: data.name || "",
-                    subtext: data.subtext || "",
-                    description: data.description || ""
-                });
-            } else {
-                console.error("Failed to fetch pathway");
-            }
+            const data = await getPathway(pathwayId);
+            setPathway(data);
+            setEditForm({
+                name: data.name || "",
+                subtext: data.subtext || "",
+                description: data.description || ""
+            });
         } catch (error) {
             console.error("Error fetching pathway:", error);
         } finally {
@@ -59,25 +54,16 @@ export default function PathwayDetail() {
 
     async function handleSave() {
         try {
-            const res = await fetchWithKey(`http://127.0.0.1:5271/api/v1/departments/${departmentId}/pathways/${pathwayId}`, {
-                method: "PUT",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    id: pathwayId,
-                    name: editForm.name,
-                    subtext: editForm.subtext,
-                    description: editForm.description,
-                    departmentId: departmentId
-                }),
-            });
-
-            if (res.ok) {
-                setPathway({ ...pathway!, ...editForm });
-                setIsEditing(false);
-            } else {
-                console.error("Failed to save pathway");
-                alert("Failed to save changes. Please try again.");
-            }
+            const updatedData = {
+                id: pathwayId,
+                name: editForm.name,
+                subtext: editForm.subtext,
+                description: editForm.description,
+                departmentId: departmentId
+            };
+            await updatePathway(pathwayId, updatedData);
+            setPathway({ ...pathway!, ...editForm });
+            setIsEditing(false);
         } catch (e) {
             console.error("Failed to save", e);
             alert("Error saving changes.");
@@ -177,11 +163,8 @@ function StagesList({ pathwayId, institutionId, departmentId }: { pathwayId: str
 
     async function fetchStages() {
         try {
-            const res = await fetchWithKey(`http://127.0.0.1:5271/api/v1/pathways/${pathwayId}/stages`);
-            if (res.ok) {
-                const data = await res.json();
-                setStages(data);
-            }
+            const data = await getStages(pathwayId);
+            setStages(data);
         } catch (e) {
             console.error("Fetch stages failed", e);
         }
