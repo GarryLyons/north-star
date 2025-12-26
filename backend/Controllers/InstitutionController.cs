@@ -3,7 +3,6 @@ using NorthStar.API.Models;
 using NorthStar.API.Services;
 using Amazon.DynamoDBv2.Model;
 using System.Linq;
-using System.Linq;
 using System.Collections.Generic;
 using Microsoft.Extensions.Logging;
 
@@ -15,16 +14,26 @@ namespace NorthStar.API.Controllers
     {
         private readonly DynamoDbService _dynamoDb;
         private readonly ILogger<InstitutionController> _logger;
+        private readonly AuthorizationService _authorizationService;
 
-        public InstitutionController(DynamoDbService dynamoDb, ILogger<InstitutionController> logger)
+        public InstitutionController(DynamoDbService dynamoDb, ILogger<InstitutionController> logger, AuthorizationService authorizationService)
         {
             _dynamoDb = dynamoDb;
             _logger = logger;
+            _authorizationService = authorizationService;
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateInstitution([FromBody] Institution institution)
         {
+            // AuthZ: Only Super Admin can create institutions
+            var user = await _authorizationService.GetCurrentUserAsync();
+            if (user == null || user.Role != UserRoles.SuperAdmin)
+            {
+                _logger.LogWarning("CreateInstitution: Unauthorized access attempt by {UserId}", user?.Id);
+                return Forbid();
+            }
+
             _logger.LogInformation("Creating institution: Name={Name}, Code={Code}", institution.Name, institution.Code);
 
             if (string.IsNullOrEmpty(institution.Id))
@@ -66,6 +75,19 @@ namespace NorthStar.API.Controllers
                 return BadRequest();
             }
 
+            // AuthZ Check
+            var user = await _authorizationService.GetCurrentUserAsync();
+            if (user == null) return Unauthorized();
+
+            // Allow Super Admin OR Institution User of THAT institution
+            bool isAllowed = user.Role == UserRoles.SuperAdmin;
+            if (!isAllowed && user.Role == UserRoles.InstitutionUser)
+            {
+                isAllowed = _authorizationService.CanAccessInstitution(user, id);
+            }
+
+            if (!isAllowed) return Forbid();
+
             var existingResponse = await _dynamoDb.GetItemAsync($"INST#{id}", "META");
             if (existingResponse.Item == null || existingResponse.Item.Count == 0)
             {
@@ -95,6 +117,18 @@ namespace NorthStar.API.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetInstitution(string id)
         {
+            // AuthZ Check
+            var user = await _authorizationService.GetCurrentUserAsync();
+            if (user == null) return Unauthorized();
+
+            if (user.Role != UserRoles.SuperAdmin)
+            {
+                if (!_authorizationService.CanAccessInstitution(user, id))
+                {
+                    return Forbid();
+                }
+            }
+
             var response = await _dynamoDb.GetItemAsync($"INST#{id}", "META");
 
             if (response.Item == null || response.Item.Count == 0)
@@ -116,6 +150,10 @@ namespace NorthStar.API.Controllers
         [HttpGet]
         public async Task<IActionResult> ListInstitutions()
         {
+            var user = await _authorizationService.GetCurrentUserAsync();
+            if (user == null) return Unauthorized();
+
+            // 1. Fetch All Institutions (Scan)
             var filter = "EntityType = :entityType";
             var values = new Dictionary<string, AttributeValue>
             {
@@ -130,9 +168,40 @@ namespace NorthStar.API.Controllers
                 Name = item.ContainsKey("Name") ? item["Name"].S : "",
                 Code = item.ContainsKey("Code") ? item["Code"].S : "",
                 Address = item.ContainsKey("Address") ? item["Address"].S : ""
-            }).ToList();
+            });
 
-            return Ok(institutions);
+            // 2. Filter based on Role
+            if (user.Role == UserRoles.SuperAdmin)
+            {
+                return Ok(institutions.ToList());
+            }
+            else if (user.Role == UserRoles.InstitutionUser || user.Role == UserRoles.DepartmentUser || user.Role == UserRoles.PathwayUser)
+            {
+                // Parse Institution ID from Scope?
+                // Scope format: inst:ID, dept:ID, pathway:ID.
+                // It is hard to extract "InstitutionId" from "dept:ID" without looking up the Dept.
+                // HOWEVER, for Institution User, the scope IS the institution ID or "inst:ID".
+
+                // For simplicity finding which institution they belong to:
+                if (user.Role == UserRoles.InstitutionUser)
+                {
+                    // Scope should be "inst:{id}" or just "{id}" (though we enforced "inst:" prefix in invite).
+                    var instId = user.Scope.StartsWith("inst:") ? user.Scope.Substring(5) : user.Scope;
+
+                    var filtered = institutions.Where(i => i.Id == instId).ToList();
+                    return Ok(filtered);
+                }
+
+                // Department/Pathway Users: ideally they see their parent institution?
+                // For now, let's return EMPTY or only their institution if we can resolve it.
+                // Since this endpoint populates the Dashboard "Institutions" list, if they are Dept users, maybe they shouldn't see this list or only their parent.
+                // But we don't have easy lookup from Dept -> Inst without querying Dept first.
+                // Let's return Forbidden for now or Empty, until requirement clarifies for Dept users on Dashboard.
+                // User requirement specifically mentioned "Institution User".
+                return Ok(new List<Institution>());
+            }
+
+            return Forbid();
         }
     }
 }

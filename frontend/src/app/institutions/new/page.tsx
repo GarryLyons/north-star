@@ -2,13 +2,21 @@
 
 import { useAuthenticator } from "@aws-amplify/ui-react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { createInstitution } from "@/app/actions/institutions";
 
 export default function NewInstitution() {
     const router = useRouter();
     const { user } = useAuthenticator((context) => [context.user]);
+
+    // Auth Redirect
+    useEffect(() => {
+        if (!user) {
+            router.push("/login");
+        }
+    }, [user, router]);
+
     const [formData, setFormData] = useState({
         name: "",
         code: "",
@@ -23,7 +31,7 @@ export default function NewInstitution() {
         console.log("handleSubmit called. Submitting form data:", formData);
 
         try {
-            await createInstitution(formData);
+            await createInstitution(formData, user?.userId);
             console.log("Institution created successfully");
             router.push("/"); // Redirect to Dashboard (root)
         } catch (error) {

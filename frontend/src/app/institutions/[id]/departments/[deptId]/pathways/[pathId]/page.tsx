@@ -38,7 +38,7 @@ export default function PathwayDetail() {
 
     async function fetchPathway() {
         try {
-            const data = await getPathway(pathwayId);
+            const data = await getPathway(departmentId, pathwayId);
             setPathway(data);
             setEditForm({
                 name: data.name || "",
@@ -61,7 +61,7 @@ export default function PathwayDetail() {
                 description: editForm.description,
                 departmentId: departmentId
             };
-            await updatePathway(pathwayId, updatedData);
+            await updatePathway(departmentId, pathwayId, updatedData);
             setPathway({ ...pathway!, ...editForm });
             setIsEditing(false);
         } catch (e) {

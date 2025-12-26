@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useAuthenticator } from "@aws-amplify/ui-react";
 import { useRouter } from "next/navigation";
 import { getInstitutions } from "@/app/actions/institutions";
+import { getCurrentUser } from "@/app/actions/users";
 
 interface Institution {
   id: string;
@@ -18,21 +19,34 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const { user } = useAuthenticator((context) => [context.user]);
   const router = useRouter();
+  const [currentUserRole, setCurrentUserRole] = useState<string>("");
 
   useEffect(() => {
-    // If not logged in, AuthWrapper in Layout or useEffect usually handles redirect,
-    // but good to keep safe.
     if (!user) {
       router.push("/login");
       return;
     }
-    fetchInstitutions();
+
+    const userId = user.userId;
+
+    // Fetch Current User Role
+    const loadUserRole = async () => {
+      try {
+        const u = await getCurrentUser(userId);
+        if (u) setCurrentUserRole(u.role);
+      } catch (e) {
+        console.error("Failed to fetch user role", e);
+      }
+    };
+    loadUserRole();
+
+    fetchInstitutions(userId);
   }, [user, router]);
 
-  async function fetchInstitutions() {
+  async function fetchInstitutions(userId?: string) {
     try {
       console.log("Fetching institutions list using Server Action...");
-      const data = await getInstitutions();
+      const data = await getInstitutions(userId);
       setInstitutions(data);
     } catch (error) {
       console.error("Error fetching institutions:", error);
@@ -47,12 +61,14 @@ export default function Home() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-semibold text-gray-900">Dashboard</h1>
-        <Link
-          href="/institutions/new"
-          className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-        >
-          Add Institution
-        </Link>
+        {currentUserRole === "super-admin" && (
+          <Link
+            href="/institutions/new"
+            className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          >
+            Add Institution
+          </Link>
+        )}
       </div>
 
       <div className="bg-white shadow sm:rounded-lg border border-gray-200">

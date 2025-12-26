@@ -2,18 +2,18 @@
 
 import { fetchWithSigV4 } from "@/utils/amplify-server-utils";
 
-export async function getInstitutions() {
+export async function getInstitutions(userId?: string) {
     try {
-        return await fetchWithSigV4("/api/v1/institutions");
+        return await fetchWithSigV4("/api/v1/institutions", "GET", undefined, userId);
     } catch (error) {
         console.error("Failed to fetch institutions:", error);
         throw error;
     }
 }
 
-export async function createInstitution(data: any) {
+export async function createInstitution(data: any, userId?: string) {
     try {
-        return await fetchWithSigV4("/api/v1/institutions", "POST", data);
+        return await fetchWithSigV4("/api/v1/institutions", "POST", data, userId);
     } catch (error) {
         console.error("Failed to create institution:", error);
         throw error;
@@ -83,18 +83,18 @@ export async function createPathway(departmentId: string, data: any) {
     }
 }
 
-export async function updatePathway(pathwayId: string, data: any) {
+export async function updatePathway(departmentId: string, pathwayId: string, data: any) {
     try {
-        return await fetchWithSigV4(`/api/v1/pathways/${pathwayId}`, "PUT", data);
+        return await fetchWithSigV4(`/api/v1/departments/${departmentId}/pathways/${pathwayId}`, "PUT", data);
     } catch (error) {
         console.error(`Failed to update pathway ${pathwayId}:`, error);
         throw error;
     }
 }
 
-export async function getPathway(pathwayId: string) {
+export async function getPathway(departmentId: string, pathwayId: string) {
     try {
-        return await fetchWithSigV4(`/api/v1/pathways/${pathwayId}`);
+        return await fetchWithSigV4(`/api/v1/departments/${departmentId}/pathways/${pathwayId}`);
     } catch (error) {
         console.error(`Failed to fetch pathway ${pathwayId}:`, error);
         throw error;

@@ -6,9 +6,7 @@ import { useAuthenticator } from "@aws-amplify/ui-react";
 
 const navigation = [
     { name: "Dashboard", href: "/" },
-    // { name: "Users", href: "/users" }, // Users not implemented yet, but keeping as placeholder or removing if not in scope. 
-    // User requested "no longer shows separate menu items for Institutions, Departments, Pathways".
-    // I will keep Dashboard only for now as distinct home.
+    { name: "Invite User", href: "/admin/users/invite" }, // Added for easy access to invite flow
 ];
 
 export default function Sidebar() {

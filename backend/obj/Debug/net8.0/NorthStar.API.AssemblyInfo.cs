@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("NorthStar.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c6b070f18c7b089ee6bcd12e45bd48b9b1447bd2")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+529ebcef8a420ee4a3d90fc03637194dba3139a3")]
 [assembly: System.Reflection.AssemblyProductAttribute("NorthStar.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("NorthStar.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -55,6 +55,9 @@ builder.Services.AddAWSService<Amazon.DynamoDBv2.IAmazonDynamoDB>();
 //     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddSingleton<NorthStar.API.Services.DynamoDbService>();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<NorthStar.API.Services.IUserContextService, NorthStar.API.Services.UserContextService>();
+builder.Services.AddScoped<NorthStar.API.Services.AuthorizationService>();
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
